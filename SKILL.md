@@ -17,11 +17,7 @@ metadata:
 
 Use this skill when the user talks to Hermes as if writing a diary and expects the entry to be saved in the wiki's journal area.
 
-The user's LLM-Wiki vault is:
-
-```text
-/Users/goyunseo/Library/Mobile Documents/com~apple~CloudDocs/LLM-Wiki
-```
+**Vault path**: The user's LLM-Wiki vault (customize per user, e.g. `~/Library/Mobile Documents/com~apple~CloudDocs/LLM-Wiki`)
 
 Journal notes live separately from general wiki topics:
 
@@ -40,8 +36,8 @@ Default mode for this user is **diary-only saved, counseling in chat**:
 - Use raw `### 나` / `### Hermes` transcript format only when the user explicitly asks for “대화 그대로 저장”, “너 답변도 저장”, or equivalent.
 
 User-specific automation preference:
-- Treat long, reflective Telegram messages from Ko Yunseo as journal-worthy by default, even when they do not explicitly say “일기” or “저장”. This includes career anxiety, school/exam stress, money/investing worries, project/team burnout, identity/self-worth reflections, decisions, conflicts, and long emotional updates.
-- Auto-save these to `4_journal/{YYYY-MM-DD}.md` unless the user explicitly says not to save (`기록하지 마`, `저장하지 마`, `오프더레코드`, etc.).
+- Treat long, reflective messages as journal-worthy by default when the user indicates diary-like intent (even without explicit “일기” command). This is especially useful for career anxiety, exam stress, money/investing worries, burnout, identity, decisions, and emotional updates.
+- Auto-save these to `4_journal/{YYYY-MM-DD}.md` unless the user explicitly opts out.
 - For each saved entry, generate a short Obsidian-friendly title and tags. Title should be specific and human-readable; tags should include emotions, events, domains, and project names when present.
 - Keep this automatic journal write-back separate from `2_wiki/` topic pages. Do not turn private emotions into public project wiki facts unless the user explicitly asks.
 
@@ -107,7 +103,7 @@ Before acting, load:
    - If the file exists, append a new entry rather than overwriting previous entries.
 
 5. **Entry format**
-   - Default for Ko Yunseo: append a timestamped **diary-style distilled entry** with an entry title and Obsidian tags:
+   - Default: append a timestamped **diary-style distilled entry** with an entry title and Obsidian tags:
      ```markdown
      
      ## HH:MM — 짧은 제목
@@ -129,7 +125,7 @@ Before acting, load:
      - Emotions: `#감정/불안`, `#감정/무기력`, `#감정/열등감`, `#감정/분노`, `#감정/슬픔`, `#감정/압박감`, `#감정/회복`
      - Events: `#사건/시험`, `#사건/공모전`, `#사건/지원사업`, `#사건/현장실습`, `#사건/팀프로젝트`, `#사건/투자손실`
      - Domains: `#영역/진로`, `#영역/공부`, `#영역/돈`, `#영역/건강`, `#영역/관계`, `#영역/프로젝트`
-     - Projects/people: `#프로젝트/UniPort`, `#프로젝트/AI유즈케이스`, `#프로젝트/MarketFlowSentinel`
+     - Projects/people: `#프로젝트/TeamProject`, `#프로젝트/AIUseCase`, `#프로젝트/MarketAnalysis` (customize per user)
    - Add file-level frontmatter tags only for broad categories (`[일기, telegram]` by default). Put entry-specific emotion/event tags under each entry so multiple entries in one day can differ.
    - Do not include a `### Hermes` section by default. Fold useful advice into “상담하면서 정리된 생각”, “지금 해볼 것”, or “내가 놓지 말아야 할 기준”.
    - If the user explicitly says “대화 그대로 저장”, “상담 내용 전체 저장”, or “너 답변도 같이 저장”, then use raw transcript format:
